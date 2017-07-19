@@ -3,6 +3,7 @@
 import os
 import subprocess
 import sys
+import urllib
 
 from lib.config import PLATFORM
 from lib.util import execute, rm_rf, scoped_env
@@ -89,6 +90,8 @@ def main():
   else:
     run_script('build.py', ['-c', 'D'])
     if PLATFORM == 'win32' or target_arch == 'x64':
+      urllib.urlretrieve("https://live.sysinternals.com/procdump.exe", os.path.join(SOURCE_ROOT, "out", "D", "procdump.exe"))
+      urllib.urlretrieve("https://live.sysinternals.com/procdump64.exe", os.path.join(SOURCE_ROOT, "out", "D", "procdump64.exe"))
       run_script('test.py', ['--ci', '--rebuild_native_modules'])
       run_script('verify-ffmpeg.py')
 
